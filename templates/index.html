@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .form-box {
+            padding: 20px;
+            border: 1px solid #dcdcdc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        label {
+            font-weight: bold;
+            color: #34495e;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+        }
+        input[type="submit"] {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #1f6391;
+        }
+        .section-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        /* Styling for the Target Variable */
+        .target-box {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border: 1px solid #dcdcdc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .target-box label {
+            font-size: 1.3em;
+            color: #2980b9;
+        }
+        .target-box select {
+            font-size: 1.1em;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Input Values for Prediction</h1>
+    
+    <div class="form-box">
+        <form action="/predict" method="POST">
+            <!-- Target variable emphasized -->
+            <div class="target-box">
+                <label for="target_variable">Target Variable:</label>
+                <select id="target_variable" name="target_variable" required>
+                    <option value="SAM_Valance">Valance</option>
+                    <option value="SAM_Arousal">Arousal</option>
+                    <option value="SAM_Dominance">Dominance</option>
+                    <option value="IOS">IOS</option>
+                    <option value="Intimidated">Intimidated</option>
+                    <option value="Empathy">Empathy</option>
+                    <option value="Envy">Envy</option>
+                    <option value="Embarressed">Embarressed</option>
+                    <option value="Guilty">Guilty</option>
+                    <option value="Pride">Pride</option>
+                    <option value="Shame">Shame</option>
+                    <option value="Admire">Admire</option>
+                    <option value="enjoyed_activity">enjoyed activity</option>
+                    <option value="tried_hard">tried hard</option>
+                    <option value="attracted_to_other_person">attracted_to_other_person</option>
+                    <option value="responsible_for_other_person">responsible_for_other_person</option>
+                    <option value="repulsed">repulsed</option>
+                    <option value="focused_on_the_other_person">focused_on_the_other_person</option>
+                    <option value="focused_on_myself">focused_on_myself</option>
+                    <option value="satisfied_with_performance">satisfied_with_performance</option>
+                    <option value="IMI_Relatedness">Relatedness</option>
+                    <option value="SEES_PositiveWellBeing">Positive Well-Being</option>
+                    <option value="SEES_PsychologicalDistress">Psychological Distress</option>
+                    <option value="SEES_Fatigue">Fatigue</option>
+                    <option value="NumberOfSitUps">Number of SitUps</option>
+                    <option value="Time">Time for Situp</option>
+                    <option value="HR">Heart Rate</option>
+                </select>
+            </div>
+
+            <!-- Fixed features inputs -->
+            <div class="section-title">Input Fields</div>
+
+            <label for="Gender">Gender:</label>
+            <select id="Gender" name="Gender" required>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select><br>
+
+            <label for="AttrAvatar">AttrAvatar:</label>
+            <select id="AttrAvatar" name="AttrAvatar" required>
+                <option value="MSli">Male Slim</option>
+                <option value="MMus">Male Muscular</option>
+                <option value="MOb">Male Obese</option>
+                <option value="FSli">Female Slim</option>
+                <option value="FMus">Female Muscular</option>
+                <option value="FOb">Female Obese</option>
+            </select><br>
+
+            <label for="IndentifyAvatar">IndentifyAvatar:</label>
+            <select id="IndentifyAvatar" name="IndentifyAvatar" required>
+                <option value="MSli">Male Slim</option>
+                <option value="MMus">Male Muscular</option>
+                <option value="MOb">Male Obese</option>
+                <option value="FSli">Female Slim</option>
+                <option value="FMus">Female Muscular</option>
+                <option value="FOb">Female Obese</option>
+            </select><br>
+
+            <label for="Competition">Competition (numeric 1-7):</label>
+            <input type="number" step="any" id="Competition" name="Competition" required><br>
+
+            <label for="Cooperation">Cooperation (numeric 1-7):</label>
+            <input type="number" step="any" id="Cooperation" name="Cooperation" required><br>
+
+            <label for="SMS">SMS (numeric 1-5):</label>
+            <input type="number" step="any" id="SMS" name="SMS" required><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>
+</html>
+
