@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Prediction Results</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                }
+                h1 {
+                    color: #2c3e50;
+                }
+                .section-title {
+                    font-size: 1.2em;
+                    font-weight: bold;
+                    color: #2980b9;
+                    margin-bottom: 10px;
+                }
+                .result-box, .prediction-box, .tree-box {
+                    padding: 15px;
+                    border: 1px solid #dcdcdc;
+                    margin-bottom: 20px;
+                    border-radius: 5px;
+                }
+                .result-box {
+                    background-color: #f9f9f9;
+                }
+                .prediction-box {
+                    background-color: #ecf0f1;
+                }
+                .tree-box {
+                    text-align: center;
+                    margin-top: 20px;
+                }
+                a {
+                    display: inline-block;
+                    margin-top: 20px;
+                    text-decoration: none;
+                    color: #2980b9;
+                }
+                a:hover {
+                    text-decoration: underline;
+                }
+            </style>
+            <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>Prediction Results for {{ target_variable }}</h1>
+
+    <div class="result-box">
+        <div class="section-title">Inserted Values:</div>
+        <p><span class="label">Gender:</span> {{ fixed_values_example['Gender'] }}</p>
+        <p><span class="label">AttrAvatar:</span> {{ fixed_values_example['AttrAvatar'] }}</p>
+        <p><span class="label">IndentifyAvatar:</span> {{ fixed_values_example['IndentifyAvatar'] }}</p>
+        <p><span class="label">Competition:</span> {{ fixed_values_example['Competition'] }}</p>
+        <p><span class="label">Cooperation:</span> {{ fixed_values_example['Cooperation'] }}</p>
+        <p><span class="label">SMS:</span> {{ fixed_values_example['SMS'] }}</p>
+    </div>
+
+    <div class="prediction-box">
+        <div class="section-title">Predicted Values:</div>
+        <p><span class="label">Predicted Sex:</span> {{ best_combination['Sex'] }}</p>
+        <p><span class="label">Predicted Social Context:</span> {{ best_combination['SocialContext'] }}</p>
+        <p><span class="label">Predicted Body Type:</span> {{ best_combination['BodyType'] }}</p>
+        <p><span class="label">Predicted Value:</span> {{ best_combination['Predicted_Value'] }}</p>
+    </div>
+    
+    <!-- <div class="tree-box">
+            <div class="section-title">Decision Tree Visualization</div>
+            <img src="{{ tree_image_path }}" alt="Decision Tree Visualization">
+        </div> -->
+
+    <div class="tree-box">
+            <div class="section-title">Interactive Decision Tree Visualization</div>
+            <div id="tree-container" style="width: 100%; height: 600px; overflow: hidden; border: 1px solid #dcdcdc;">
+                <!-- SVG will be embedded here -->
+            </div>
+        </div>
+    <script>
+        console.log("Attempting to load SVG...");
+
+        // Load the SVG file into the container
+        let svgObject = d3.select("#tree-container").append("object")
+            .attr("type", "image/svg+xml")
+            .attr("data", "/static/decision_tree.svg")
+            .attr("width", "100%")
+            .attr("height", "100%");
+
+        // Listen for the load event to ensure the SVG is fully loaded
+        svgObject.node().addEventListener('load', function() {
+            // Access the embedded SVG document
+            let svgDoc = svgObject.node().contentDocument;
+
+            // Select the SVG element within the object
+            let svg = d3.select(svgDoc).select("svg");
+
+            // Create a group for zooming and panning
+            let zoomGroup = svg.append("g")
+                .attr("class", "zoom-group");
+
+            // Move all existing SVG elements into the zoom group
+            while (svg.node().firstChild) {
+                zoomGroup.node().appendChild(svg.node().firstChild);
+            }
+
+            // Define the zoom behavior
+            let zoom = d3.zoom()
+                .scaleExtent([0.5, 5]) // Set the zoom scale limits
+                .on("zoom", function(event) {
+                    zoomGroup.attr("transform", event.transform);
+                });
+
+            // Apply the zoom behavior to the SVG
+            svg.call(zoom);
+        });
+    </script>
+
+
+
+    <a href="/">Go back to the form</a>
+</body>
+</html>
+
